@@ -54,7 +54,7 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
         Node<T> currentNode = this.root;
         int nodeIdx = sizeOfList;
         while (currentNode != null) {
-            System.out.println("node " + nodeIdx + "is " + currentNode.toString());
+            System.out.println("node " + nodeIdx + " is " + currentNode.toString());
             currentNode = currentNode.getNextNode();
             nodeIdx--;
         }
@@ -76,6 +76,24 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
         }
 
 
+    }
+
+    @Override
+    public void reverseList(){
+        if (root != null) {
+            root = reverseListAux(null, root);
+        }
+    }
+
+    private Node<T> reverseListAux(Node<T> previous, Node<T> current){
+        if (current.getNextNode() != null){
+            Node<T> nextCurrent = current.getNextNode();
+            current.setNextNode(previous);
+            return reverseListAux(current, nextCurrent);
+        } else {
+            current.setNextNode(previous);
+            return current;
+        }
     }
 
 }

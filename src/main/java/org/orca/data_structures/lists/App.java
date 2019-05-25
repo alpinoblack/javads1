@@ -15,6 +15,10 @@ public class App {
 
         integerList.traverseList();
 
+        integerList.reverseList();
+
+        integerList.traverseList();
+
     }
 
 }
