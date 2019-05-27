@@ -1,9 +1,11 @@
 package org.orca.data_structures.lists;
 
+import java.util.NoSuchElementException;
+
 public class LinkedList<T extends Comparable<T>> implements List<T> {
 
     private Node<T> root = null;
-    private int sizeOfList;
+    private int sizeOfList = 0;
 
     private void insertDataAtBeginning(T data) {
         Node<T> newNode = new Node<>(data);
@@ -93,6 +95,54 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
         } else {
             current.setNextNode(previous);
             return current;
+        }
+    }
+
+    private Node<T> findNodeNthFromEnd(int n) {
+
+        if (n > sizeOfList) {
+            throw new NoSuchElementException("list is too short!");
+        } else {
+            Node<T> probeNode = root;
+            Node<T> tracerNode = root;
+            while(probeNode.getNextNode() !=  null && n > 0) {
+                probeNode = probeNode.getNextNode();
+                n--;
+            }
+
+            while(probeNode.getNextNode()!= null) {
+                probeNode = probeNode.getNextNode();
+                tracerNode = tracerNode.getNextNode();
+            }
+
+            return tracerNode;
+
+        }
+
+    }
+
+    @Override
+    public void shiftRight(int numOfShifts){
+        if (root != null && numOfShifts != 0 && sizeOfList != 0 && numOfShifts % sizeOfList > 0) {
+
+            int effectiveShifts = numOfShifts % sizeOfList;
+
+            Node<T> newLast = findNodeNthFromEnd(effectiveShifts);
+
+            Node<T> newRoot = newLast.getNextNode();
+
+            newLast.setNextNode(null);
+
+            Node<T> lastNodeOfNewNodeSubList = newRoot;
+
+            while(lastNodeOfNewNodeSubList.getNextNode() != null) {
+                lastNodeOfNewNodeSubList = lastNodeOfNewNodeSubList.getNextNode();
+            }
+
+            lastNodeOfNewNodeSubList.setNextNode(root);
+
+            root = newRoot;
+
         }
     }
 

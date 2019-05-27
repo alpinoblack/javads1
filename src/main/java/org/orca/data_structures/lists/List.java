@@ -6,4 +6,5 @@ public interface List<T> {
     public void traverseList();
     public int size();
     public void reverseList();
+    public void shiftRight(int numOfShifts);
 }
